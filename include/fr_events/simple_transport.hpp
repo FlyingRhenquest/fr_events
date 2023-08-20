@@ -26,8 +26,6 @@ namespace fr::events::transport {
    */
   
   class simple_sender : public sender {
-  private:
-    std::vector<simple_receiver*> receivers;
   public:
 
     simple_sender();
@@ -35,13 +33,6 @@ namespace fr::events::transport {
 
     void send(std::shared_ptr<fr::events::base_event> event) override;
 
-    /**
-     * Subscribe a receiver to this sender
-     */
-    void subscribe(simple_receiver& r);
-    void subscribe(simple_receiver* r);
-    void subscribe(std::shared_ptr<simple_receiver> rec);
-    void unsubscribe(simple_receiver* r);
   };
 
   /**
@@ -49,13 +40,9 @@ namespace fr::events::transport {
    */
   
   class simple_receiver : public receiver {
-  private:
-    std::vector<simple_sender*> subscriptions;
   public:
     simple_receiver();
     virtual ~simple_receiver() override;
-
-    void add(simple_sender* subscription);
   };
 
 }

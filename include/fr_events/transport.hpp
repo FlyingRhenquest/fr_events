@@ -41,11 +41,20 @@ namespace fr::events::transport {
    */
   
   class sender {
+  protected:
+    std::vector<receiver*> receivers;
   public:
     sender();
     virtual ~sender();
 
     virtual void send(std::shared_ptr<base_event> event) = 0;
+    virtual void subscribe(receiver* r);
+    virtual void subscribe(receiver& r);
+    virtual void subscribe(std::shared_ptr<receiver> r);
+    virtual void unsubscribe(receiver* r);
+    virtual void unsubscribe(receiver& r);
+    virtual void unsubscribe(std::shared_ptr<receiver> r);
+    virtual void unsubscribe_all();
   };
 
   /**
@@ -95,10 +104,12 @@ namespace fr::events::transport {
    */
   
   class receiver {
+  protected:
+    std::vector<boost::signals2::connection> subscribers;
   public:
     receiver();
     virtual ~receiver();
-
+    
     /**
      * This is the signal you subscribe to in order to receive events from
      * the receiver. The subscribe method in event_handler will automatically 
@@ -107,7 +118,6 @@ namespace fr::events::transport {
      */
     
     boost::signals2::signal<void(std::shared_ptr<base_event>)> received;
-
   };
   
 }

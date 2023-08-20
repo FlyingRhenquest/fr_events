@@ -82,6 +82,7 @@ set(EXTRA_LIBRARIES
 add_library(fr_events SHARED
   ${CMAKE_SOURCE_DIR}/src/base_event.cpp
   ${CMAKE_SOURCE_DIR}/src/event_buffer.cpp
+  ${CMAKE_SOURCE_DIR}/src/filters.cpp
   ${CMAKE_SOURCE_DIR}/src/transport.cpp
   ${CMAKE_SOURCE_DIR}/src/simple_transport.cpp
   ${CMAKE_SOURCE_DIR}/src/zmq_transport.cpp
@@ -123,6 +124,7 @@ target_include_directories(fr_events_python_api PUBLIC
 add_executable(test_all_the_things
   ${CMAKE_SOURCE_DIR}/test/test_runner_basic.cpp
   ${CMAKE_SOURCE_DIR}/test/base_event.cpp
+  ${CMAKE_SOURCE_DIR}/test/filters.cpp
   ${CMAKE_SOURCE_DIR}/test/simple_transport.cpp
   ${CMAKE_SOURCE_DIR}/test/zmq_test.cpp
   )
@@ -150,6 +152,7 @@ set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include/fr_events")
 set(HEADER_INSTALL_LIST
   ${INCLUDE_DIR}/base_event.hpp
   ${INCLUDE_DIR}/event_buffer.hpp
+  ${INCLUDE_DIR}/filters.hpp
   ${INCLUDE_DIR}/simple_transport.hpp
   ${INCLUDE_DIR}/transport.hpp
   ${INCLUDE_DIR}/zmq_transport.hpp
@@ -163,6 +166,7 @@ install(TARGETS fr_events
   DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
+# Used for debugging CMake behavior
 #get_cmake_property(_variableNames VARIABLES)
 #list (SORT _variableNames)
 #foreach (_variableName ${_variableNames})

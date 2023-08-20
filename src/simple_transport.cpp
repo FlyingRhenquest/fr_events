@@ -21,31 +21,6 @@ namespace fr::events::transport {
 simple_sender::simple_sender() {}
 simple_sender::~simple_sender() {}
 
-  void simple_sender::subscribe(simple_receiver* r) {
-    receivers.push_back(r);
-    // Add this as a subscription so receiver can cancel signals when
-    // it's deleted
-    r->add(this);
-  }
-  
-  // Yeah, we're degrading everyting to raw pointers
-  void simple_sender::subscribe(simple_receiver& r) {
-    subscribe(&r);
-  }
-
-  void simple_sender::subscribe(std::shared_ptr<simple_receiver> r) {
-    assert(r.get() != nullptr);
-    subscribe(r.get());
-  }
-
-  void simple_sender::unsubscribe(simple_receiver* r) {
-    for(auto subscriber = receivers.begin(); subscriber != receivers.end(); ++subscriber ) {
-      if (*subscriber == r) {
-	receivers.erase(subscriber);
-      }
-    }
-  }
-  
   void simple_sender::send(std::shared_ptr<fr::events::base_event> event) {
     // Call receiver->received() directly -- this blocks the current
     // thread until all subscribers ahve received the signal.
@@ -56,8 +31,5 @@ simple_sender::~simple_sender() {}
 
   simple_receiver::simple_receiver() {}
   simple_receiver::~simple_receiver() {}
-  void simple_receiver::add(simple_sender* subscription) {
-    subscriptions.push_back(subscription);
-  }
 
 }

@@ -21,6 +21,39 @@ namespace fr::events::transport {
   sender::sender() {}
   sender::~sender() {};
 
+  void sender::subscribe(receiver* r) {
+    receivers.push_back(r);
+  }
+  
+  void sender::subscribe(receiver& r) {
+    subscribe(&r);
+  }
+
+  void sender::subscribe(std::shared_ptr<receiver> r) {
+    subscribe(r.get());
+  }
+
+  void sender::unsubscribe(receiver* r) {
+    for (auto subscriber = receivers.begin(); subscriber != receivers.end(); ++subscriber) {
+      if (*subscriber == r) {
+	receivers.erase(subscriber);
+	break;
+      }
+    }
+  }
+
+  void sender::unsubscribe(receiver& r) {
+    unsubscribe(&r);
+  }
+
+  void sender::unsubscribe(std::shared_ptr<receiver> r) {
+    unsubscribe(r.get());
+  }
+
+  void sender::unsubscribe_all() {
+    receivers.erase(receivers.begin(), receivers.end());
+  }
+  
   event_handler::event_handler() {};
   
   event_handler::~event_handler() {

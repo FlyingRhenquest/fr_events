@@ -50,7 +50,7 @@ PYBIND11_MODULE(fr_events_python_api, m) {
     .def(pybind11::init<>())
     .def("subscribe_to", pybind11::overload_cast<std::shared_ptr<fr::events::transport::receiver>>(&fr::events::event_buffer::subscribe), "Subscribe to a receiver (like zmq_receiver)")
     .def("size", &fr::events::event_buffer::size, "Number of events in the buffer")
-    .def("get", &fr::events::event_buffer::get, "Retrieve an event from the back of the buffer (Buffer is LIFO)")
+    .def("get", &fr::events::event_buffer::get, "Retrieve an event from the back of the buffer (Buffer is FIFO)")
     ;
   
 }
