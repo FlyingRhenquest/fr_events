@@ -32,8 +32,8 @@ namespace fr::events {
     if (!buffer.size()) {
       throw std::logic_error("No events in buffer to retrieve.");
     }
-    std::shared_ptr<base_event> event = buffer.back();
-    buffer.pop_back();
+    std::shared_ptr<base_event> event = buffer.front();
+    buffer.erase(buffer.begin());
     return event;
   }
 

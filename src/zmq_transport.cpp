@@ -133,8 +133,8 @@ namespace fr::events::transport {
 	std::shared_ptr<base_event> event;
 	{
 	  std::lock_guard<std::mutex> lock(pending_mutex);
-	  event = pending.back();
-	  pending.pop_back();
+	  event = pending.front();
+	  pending.erase(pending.begin());
 	}
 	received(event);
       }
